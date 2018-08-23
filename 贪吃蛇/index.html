@@ -4,22 +4,21 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>2048</title>
+    <title>贪吃蛇</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../lib.js"></script>
     <style>
-        * {
-            margin: 1px;
-            padding: 0;
-        }
-
         #canvas {
             float: left;
+            padding-right: 10px;
         }
 
         #result {
-            display: none;
-            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        #content {
+            visibility: hidden;
         }
     </style>
 </head>
@@ -33,9 +32,29 @@
         d:向右
     </div>
     <div id="result">
-        <span id="content"></span>
+        <span id="score"></span>
         <br />
-        按下回车开启新的一局
+        <span id="content">游戏结束, 按下回车可快速进行下一局游戏</span>
+    </div>
+    <div>
+        <fieldset>
+            <legend>游戏结束条件</legend>
+            <label for="crash_body">碰到蛇身</label>
+            <input id="crash_body" checked type="checkbox" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="crash_wall">碰到墙壁</label>
+            <input id="crash_wall" checked type="checkbox" />
+        </fieldset>
+        <fieldset>
+            <legend>空间控制(需要先关闭碰到墙壁的游戏结束条件)</legend>
+            <label for="rev">循环爬动</label>
+            <input id="rev" type="radio" value="1" name="move_space"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="outside">可在空间外爬动</label>
+            <input id="outside" type="radio" value="2" name="move_space"/>
+        </fieldset>
+        <br />
+        <button id="newGame">新的游戏</button>
     </div>
     <script src="main.js"></script>
 </body>
