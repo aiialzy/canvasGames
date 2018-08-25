@@ -285,10 +285,7 @@ function main() {
     }
     //如果数字有变化就添加一个数字
     if (!isSame()) {
-        const count = 1 + Math.floor(Math.random()*1.5);
-        for (let i=0; i<count; i++) {
-            addNumber();
-        }
+        addNumber();
     }
     copyNums();
     //重新绘图
