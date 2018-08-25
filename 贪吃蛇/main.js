@@ -29,12 +29,13 @@ let flags = {
 }
 
 function drawSnake() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(snake.body[0].x * wh.wg_size, snake.body[0].y*wh.hg_size, wh.wg_size, wh.hg_size);
     ctx.fillStyle = "blue";
     for (let i=1; i<snake.body.length; i++) {
         ctx.fillRect(snake.body[i].x * wh.wg_size, snake.body[i].y*wh.hg_size, wh.wg_size, wh.hg_size);
     }
+
+    ctx.fillStyle = "red";
+    ctx.fillRect(snake.body[0].x * wh.wg_size, snake.body[0].y*wh.hg_size, wh.wg_size, wh.hg_size);
 }
 
 function move() {
@@ -102,9 +103,9 @@ function eatApple() {
     createApple();
     score += 1;
     clearInterval(goFlag);
-    snake.speed -= 0.2;
+    snake.speed -= 1;
     goFlag = setInterval(move, snake.speed);
-    content.innerText = "速度: " + snake.speed + "    得分:" + score;
+    content.innerText = "速度: " + (1000/snake.speed) + "    得分:" + score;
 }
 
 function moveOStyle() {
@@ -200,7 +201,7 @@ function init() {
     goFlag = setInterval(move, snake.speed);
     drawFlag = setInterval(draw, 15);
     document.body.addEventListener("keypress", chdir);
-    content.innerText = "速度: " + snake.speed + "    得分:" + score;
+    content.innerText = "速度: " + (1000 / snake.speed) + "    得分:" + score;
 }
 
 document.getElementById("newGame").addEventListener("click", newGame);
