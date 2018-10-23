@@ -4,6 +4,8 @@ const ctx = canvas.getContext('2d');
 const height = 600;
 const width = 600;
 
+let control = true;
+
 let who = false;
 
 const board = [];
@@ -38,12 +40,15 @@ function drawQipan() {
 
 function init() {
     ctx.fillStyle = "yellow";
-    ctx.rect(0, 0, 800, 800);
+    ctx.rect(0, 0, 700, 700);
     ctx.fill();
     drawQipan();
 }
 
 function getMousePos(event) {
+    if (!control) {
+        return;
+    }
     const e = event || window.event;
     const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
     const scrollY = document.documentElement.scrollTop || document.body.scrollTop;
@@ -97,23 +102,24 @@ function panduan(x, y) {
     for (let i=0; i<15; i++) {
         if (board[i][y] === n) {
             c++;
+            if (c >= 5) {
+                break;
+            }
         } else {
             c = 0;
         }
         if (board[x][i] === n) {
             r++;
+            if (r >= 5) {
+                break;
+            }
         } else {
             r = 0;
         }
     }
-    console.log("r:" + r + "\tc:" + c);
 
     if (r >= 5 || c>=5) {
-        if (who) {
-            alert("黑子获胜");
-        } else {
-            alert("白子获胜");
-        }
+        setResult();
         return;
     }
 
@@ -128,6 +134,9 @@ function panduan(x, y) {
     while (a!=15 && b!=15) {
         if (board[a][b] === n) {
             count += 1;
+            if (count >= 5) {
+                break;
+            }
         } else {
             count = 0;
         }
@@ -136,11 +145,7 @@ function panduan(x, y) {
     }
 
     if (count >= 5) {
-        if (who) {
-            alert("黑子获胜");
-        } else {
-            alert("白子获胜");
-        }
+        setResult();
         return;
     }
 
@@ -155,6 +160,9 @@ function panduan(x, y) {
     while (a!=15 && b!=-1) {
         if (board[a][b] === n) {
             count += 1;
+            if (count >= 5) {
+                break;
+            }
         } else {
             count = 0;
         }
@@ -163,22 +171,38 @@ function panduan(x, y) {
     }
 
     if (count >= 5) {
-        if (who) {
-            alert("黑子获胜");
-        } else {
-            alert("白子获胜");
-        }
+        setResult();
     }
 }
 
 function putChess(x, y) {
-    ctx.fillStyle = "black";
+    let turn = document.getElementById("turn");
     if (who) {
         ctx.fillStyle = "white";
+
+        ctx.strokeStyle = "gray";
+        ctx.beginPath();
+        ctx.arc(x*w + w, y*w + w, 20, 0, 2*Math.PI);
+        ctx.stroke();
+
+        turn.innerText = "轮到黑子下棋";
+    } else {
+        ctx.fillStyle = "black";
+        turn.innerText = "轮到白子下棋";
     }
     ctx.beginPath();
     ctx.arc(x*w + w, y*w + w, 20, 0, 2*Math.PI);
     ctx.fill();
+}
+
+function setResult() {
+    const p = document.getElementById("result");
+    if (who) {
+        p.innerText = "黑子获胜";
+    } else {
+        p.innerText = "白子获胜";
+    }
+    control = false;
 }
 
 init();
